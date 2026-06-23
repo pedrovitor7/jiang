@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+  </head>
+  <body>
+    <header>
+    <div class="header-content">
+        <div class="logo-area">
+            <div class="logo-shield">SHANGHAI<br>JIADING</div>
+
+            <div class="logo-text">
+                <h1>SHANGHAI <span>JIADING</span> NEWS</h1>
+                <p>Portal oficial do projeto</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#noticias">Notícias</a>
+            <a href="#tabela">Tabela</a>
+            <a href="#escalacao">Escalação</a>
+            <a href="#jogos">Jogos</a>
+            <a href="#galeria">Galeria</a>
+            <a href="#historia">História</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <small>Manchete principal • Temporada 2030-31</small>
+        <h2>Vingança <span>completa</span></h2>
+        <p>
+            Shanghai Jiading vence o Shanghai Port por 7 a 2 e transforma uma antiga goleada sofrida
+            em combustível para uma das maiores atuações da história do clube.
+        </p>
+
+        <div class="hero-buttons">
+            <a class="btn" href="#noticias">Ler notícias</a>
+            <a class="btn secondary" href="#tabela">Ver tabela da liga</a>
+        </div>
+    </div>
+</section>
+
+<main class="container">
+-
+    <section class="stats">
+        <div class="stat"><strong>4</strong><span>Super Ligas Chinesas</span></div>
+        <div class="stat"><strong>3</strong><span>Copas da China</span></div>
+        <div class="stat"><strong>1</strong><span>China League One</span></div>
+        <div class="stat"><strong>270</strong><span>Gols de Andrej Kostic</span></div>
+    </section>
+
+    <div class="main-grid">
+
+        <div>
+
+            <section class="section" id="noticias">
+                <h2>Últimas notícias</h2>
+
+                <div class="filters">
+                    <button class="active" onclick="filtrarNoticias('todas', this)">Todas</button>
+                    <button onclick="filtrarNoticias('2030-31', this)">2030-31</button>
+                    <button onclick="filtrarNoticias('2029-30', this)">2029-30</button>
+                    <button onclick="filtrarNoticias('2028-29', this)">2028-29</button>
+                     <button onclick="filtrarNoticias('2027-28', this)">2027-28</button>
+                    <button onclick="filtrarNoticias('historia', this)">História</button>
+                    <button onclick="filtrarNoticias('base', this)">Base</button>
+                </div>
+
+                <div class="news-grid" id="newsGrid"></div>
+            </section>
+
+            <section class="section" id="escalacao">
+                <h2>Escalação titular</h2>
+                <p id="formacaoTexto" style="margin-bottom:18px;color:#cfc3b8;"></p>
+                <div class="campo" id="campo"></div>
+            </section>
+
+            <section class="section" id="galeria">
+                <h2>Galeria do clube</h2>
+                <div class="gallery-grid" id="galeriaGrid"></div>
+            </section>
+
+            <section class="section" id="historia">
+                <h2>Linha do tempo</h2>
+                <div class="timeline" id="timeline"></div>
+            </section>
+
+        </div>
+
+        <aside>
+
+            <section class="section" id="tabela">
+                <h2>Tabela da Liga</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Time</th>
+                            <th>J</th>
+                            <th>SG</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaLiga"></tbody>
+                </table>
+            </section>
+
+            <section class="section" id="jogos">
+                <h2>Últimos jogos</h2>
+                <div id="ultimosJogos"></div>
+            </section>
+
+            <section class="section" id="artilheiros">
+                <h2>Artilheiros</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Jogador</th>
+                            <th>Gols</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="artilheirosTabela"></tbody>
+                </table>
+            </section>
+
+        </aside>
+
+    </div>
+
+</main>
+
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <button class="close-modal" onclick="fecharModal()">Fechar</button>
+        <small id="modalCategoria"></small>
+        <h2 id="modalTitulo"></h2>
+        <p id="modalTexto"></p>
+        <p id="modalTextoExtra"></p>
+    </div>
+</div>
+
+<footer>
+    Shanghai Jiading News 2.0 • Projeto Alvares nao a
+     C++ beijoss • 
+</footer>
+
+
+<script>
+/*
+COMO USAR IMAGENS:
+1. Crie uma pasta chamada "img" no mesmo local deste arquivo.
+2. Coloque suas imagens dentro dela.
+3. Use nomes parecidos com os exemplos abaixo.
+4. Cada notícia pode ter várias imagens dentro de "imagens".
+*/
+
+const noticias = [
+
+
+ 
+{
+    temporada: "2030-31",
+    tipo: "2030-31",
+    categoria: "Campeão da CSL",
+    imagens: [
+        "img/chanpioscls31.png",
+        "img/CHANPIONS31.png",
+        "img/timeinit.png"
+    ],
+    titulo: "Shanghai Jiading conquista o tetracampeonato da Superliga Chinesa",
+    texto: "O Tigre Chinês consolidou sua hegemonia no país. Desde que chegou à elite, o Shanghai Jiading já conquistou quatro títulos da Superliga Chinesa. Enquanto isso, o rival Shanghai Port ainda encontra dificuldades no campeonato nacional, apesar do título continental e das recentes finais da Copa da FA.",
+    extra: "Uma das grandes surpresas da campanha foi o jovem Xu Zhenyu. Promovido das categorias de base na temporada anterior, o ponta assumiu a titularidade e terminou a liga com oito gols e quatro assistências, tornando-se uma das principais peças do time.",
+    meta: "Superliga Chinesa"
+},
+
+
+
+     {
+    temporada: "2030-31",
+    tipo: "2030-31",
+    categoria: "Vice-campeão da AFC Elite",
+    imagens: [
+        "img/xufinal.jpg",
+        "img/xufinal2.png"
+    ],
+    titulo: "Uma final com gosto amargo em Pequim",
+    texto: "Disputada em Pequim, a grande final colocou frente a frente Shanghai Jiading e Al-Hilal. Em uma partida intensa e emocionante, o clube saudita apresentou um futebol de alto nível, venceu por 3 a 2 e conquistou o título da AFC Champions League Elite.",
+    extra: "Após conquistar uma dobradinha no futebol chinês, o Shanghai Jiading entrou em campo sonhando com a glória continental. Porém, a derrota na final deixou um gosto amargo para jogadores e torcedores.Mesmo com o resultado, Xu Zhenyu realizou uma grande partida, marcando um gol e dando uma assistência.",
+    meta: "Final • AFC Elite"
+},
+
+
+ {
+    temporada: "2030-31",
+    tipo: "2030-31",
+    categoria: "Artilheiro da AFC",
+    imagens: [
+        "img/xuartilheiro.png",
+        "img/alahli3gols.png"
+    ],
+    titulo: "Xu Zhenyu termina a AFC Elite como artilheiro",
+    texto: "Com uma campanha de destaque, Xu Zhenyu brilhou ao marcar um hat-trick contra o Al-Ahli na Semi e um gols na grande final da competição.",
+    extra: "A jovem promessa do Shanghai Jiading encerrou a AFC Elite com 12 gols, conquistando a artilharia do torneio e o prêmio de melhor jogador jovem da competição.",
+    meta: "12 gols • Artilheiro da AFC Elite"
+},
+
+
+
+{
+    temporada: "2030-31",
+    tipo: "2030-31",
+    categoria: "Campeão da Copa da FA",
+    imagens: [
+        "img/copaFA31.png",
+        "img/copachina31.png",
+        "img/jogador.png"
+    ],
+    titulo: "Shanghai Jiading vence o Shanghai Port por 3 a 1 na final",
+    texto: "O clássico de Xangai se transformou em uma verdadeira demonstração de força do Jiading. Com uma atuação dominante, a equipe derrotou seu maior rival por 3 a 1 e conquistou mais um título nacional.",
+    extra: "Xu Zhenyu voltou a brilhar em uma grande decisão e marcou um dos gols da vitória do Jiading, confirmando seu protagonismo nos momentos mais importantes da temporada.<br><br>Com o triunfo, o Shanghai Jiading tornou-se tricampeão da Copa da FA e ampliou seu domínio no futebol chinês.<br><br>Apesar da derrota no clássico, o Shanghai Port também encerrou a temporada com uma conquista internacional: o título da AFC Champions League Two.",
+    meta: "Final • Copa da FA"
+},
+
+
+
+
+
+    {
+        temporada:"2030-31",
+        tipo:"2030-31",
+        categoria:"Super Liga",
+        imagens:[
+            "img/7x2.png",
+            "img/vinganca-port-7x2-2.jpg",
+            "img/vinganca-port-7x2-3.jpg"
+        ],
+        titulo:"Shanghai Jiading vence Shanghai Port por 7 a 2",
+        texto:"O clássico de Xangai virou uma noite de vingança. Depois de sofrer goleadas no passado, o Jiading respondeu com uma atuação histórica.",
+        extra:"A vitória teve peso simbólico enorme. O Port foi durante anos a pedra no sapato do projeto, mas o placar mostrou que a hierarquia da cidade mudou.",
+        meta:"3ª rodada • Super Liga Chinesa"
+    },
+    {
+        temporada:"2030-31",
+        tipo:"2030-31 base",
+        categoria:"Seleção",
+        imagens:[
+            "img/china-4x0-tailandia-1.png",
+            "img/XuZhenyuxth.png"
+        ],
+        titulo:"Promessa do Jiading Xu Zhenyu estreia pela China em vitória sobre a Tailândia",
+        texto:"O jovem talento formado pelo projeto do clube estreou pela seleção chinesa na vitória por 4 a 0.",
+        extra:"A estreia reforça o plano do Shanghai Jiading: não apenas vencer títulos, mas fortalecer o futebol chinês e entregar jogadores prontos para a seleção.",
+        meta:"Xu Zhenyu Marcou 2 gols"
+    },
+    
+   
+
+    {
+        temporada:"2029-30",
+        tipo:"2029-30",
+        categoria:"Copa da China",
+        imagens:[
+            "img/copa-da-china-campeao-1.jpg",
+            "img/al-ittihad-semifinal-2.jpg"
+        ],
+        titulo:"Jiading conquista a Copa da China",
+        texto:"O clube confirmou mais um título nacional e encerrou a campanha com autoridade, ampliando sua hegemonia interna.",
+        extra:"Com liga e copa no mesmo ciclo, o Shanghai Jiading consolidou uma temporada quase perfeita no cenário nacional.",
+        meta:"Final • Copa da China"
+    },
+    {
+        temporada:"2029-30",
+        tipo:"2029-30",
+        categoria:"AFC Champions League",
+        imagens:[
+            "img/al-ittihad-semifinal-1.jpg",
+            "img/al-ittihad-semifinal-2.jpg"
+        ],
+        titulo:"Shanghai Jiading cai na semifinal da Champions Asiática",
+        texto:"A derrota por 2 a 1 para o Al-Ittihad encerrou a campanha continental, mas confirmou o crescimento do clube na Ásia.",
+        extra:"Mesmo eliminado, o clube saiu maior. A semifinal mostrou que o Jiading está próximo de cruzar a fronteira entre potência nacional e campeão continental.",
+        meta:"Semifinal • AFC Champions League"
+    },
+    {
+        temporada:"2029-30",
+        tipo:"2029-30 historia",
+        categoria:"Recorde",
+        imagens:[
+            "img/kostic-253-gols-1.jpg",
+            "img/al-ittihad-semifinal-2.jpg",
+            "img/al-ittihad-semifinal-2.jpg"
+        ],
+        titulo:"Andrej Kostic chega aos 253 gols pelo clube",
+        texto:"O maior artilheiro da história do Shanghai Jiading ampliou sua marca e fortaleceu seu legado como lenda do projeto.",
+        extra:"Kostic virou o símbolo ofensivo da era Jiading. Seus gols acompanharam a subida da segunda divisão até o topo do futebol chinês.",
+        meta:"Artilheiro histórico"
+    },
+    {
+    temporada: "2028-29",
+    tipo: "2028-29",
+    categoria: "Campeão",
+    imagens: [
+        "img/tituloslc28-29.png",
+                "img/jogadro28-29.png"
+    ],
+    titulo: "Jiading conquista o bicampeonato chinês",
+    texto: "Com atuações dominantes, grandes goleadas e um futebol consistente, o Jiading confirmou sua força e conquistou o segundo título consecutivo da Superliga Chinesa.",
+    extra: "A equipe realizou uma campanha segura, manteve grande regularidade durante toda a temporada e levantou a taça sem enfrentar grandes dificuldades.",
+    meta: "Superliga Chinesa"
+},
+{
+    temporada: "2028-29",
+    tipo: "2028-29",
+    categoria: "Goleadas surpreendentes",
+    imagens: [
+        "img/slc28-29.png",
+        "img/2slc28-29.png.png"
+    ],
+    titulo: "Jiading goleia e encanta a China",
+    texto: "Com atuações dominantes e verdadeiras chuvas de gols, o Jiading transformou sua campanha em uma demonstração de força ofensiva e superioridade dentro de campo.",
+    extra: "Entre os grandes resultados da temporada, destacam-se a goleada por 7 a 0 sobre o Liaoning Tieren e a vitória por 3 a 0 contra o Shanghai na última rodada, garantindo o título com um sabor ainda mais especial.",
+    meta: "Superliga Chinesa"
+},
+    {
+        temporada:"2028-29",
+        tipo:"2028-29",
+        categoria:"Mundial",
+        imagens:[
+            "img/mamelodi-4x2-1.jpg",
+            "img/mamelodi-4x2-2.jpg"
+        ],
+        titulo:"Jiading vence Mamelodi Sundowns no Mundial",
+        texto:"Depois de derrotas pesadas contra Juventus e Real Madrid, o clube reagiu e venceu o Sundowns por 4 a 2.",
+        extra:"A campanha foi dura, mas a vitória final impediu uma despedida amarga e virou um marco de aprendizado internacional.",
+        meta:"Copa do Mundo de Clubes"
+    },
+     {
+        temporada:"2028-29",
+        tipo:"2028-29",
+        categoria:"Copa da FA",
+        imagens:[
+            "img/copachina29.jpg",
+            "img/finalFA29.jpg"
+        ],
+        titulo:"Jiading vence ",
+        texto:"Depois de 90 minutos freneticos um campeão.",
+        extra:"A campanha foi dura, mas a vitória de 2 x 1 na final impediu uma bi campeonato do Shanghai Port FC .",
+        meta:"Copa do Mundo de Clubes"
+    },
+     {
+        temporada:"2027-28",
+        tipo:"2027-28",
+        categoria:"Campeão",
+        imagens:[
+            "img/splc27-28.png",
+            "img/splcfoto2.png"
+        ],
+        titulo:"Jiading vence sua primeira Super liga",
+        texto:"Depois de subir da 2 divisão eles se consagram cmapeões da China.",
+        extra:"A campanha foi dura, a taça vindo na útima rodada.",
+        meta:"Super Liga Chinesa"
+    },
+     {
+    temporada: "2027-28",
+    tipo: "2027-28",
+    categoria: "Fracasso nas semifinais da FA",
+    imagens: [
+        "img/semiFA28.png",
+        
+    ],
+    titulo: "Jiading é humilhado diante de seus rivais",
+    texto: "Depois de conquistar o acesso à primeira divisão, o Jiading surpreendeu o país ao se consagrar campeão da China. Porém, na Copa da FA, a história foi completamente diferente. A equipe não conseguiu repetir o mesmo desempenho e acabou eliminada de forma dolorosa nas semifinais.",
+    extra: "O Shanghai Port aplicou uma goleada histórica por 9 a 3, transformando o clássico em uma das derrotas mais humilhantes da história do Jiading.",
+    meta: "Copa da FA"
+},
+    {
+        temporada:"História",
+        tipo:"historia",
+        categoria:"Especial",
+        imagens:[
+            "img/ascensao-jiading-1.jpg",
+            "img/ascensao-jiading-2.jpg"
+        ],
+        titulo:"Da segunda divisão ao topo da China",
+        texto:"Em seis temporadas, o Shanghai Jiading saiu da China League One e se tornou uma potência nacional.",
+        extra:"Foram três Super Ligas, duas Copas da China, uma China League One e uma semifinal continental. O projeto virou uma era.",
+        meta:"Especial histórico"
+    }
+];
+
+const tabelaLiga = [
+    {pos:1,time:"Shanghai Jiading",j:3,v:3,e:0,d:0,gp:14,gc:4,pts:9},
+    {pos:2,time:"Beijing Guoan",j:3,v:2,e:1,d:0,gp:7,gc:3,pts:7},
+    {pos:3,time:"Shanghai Port",j:3,v:2,e:0,d:1,gp:9,gc:8,pts:6},
+    {pos:4,time:"Shandong Taishan",j:3,v:2,e:0,d:1,gp:6,gc:4,pts:6},
+    {pos:5,time:"Chengdu Rongcheng",j:3,v:1,e:1,d:1,gp:4,gc:4,pts:4},
+    {pos:6,time:"Wuhan Three Towns",j:3,v:1,e:1,d:1,gp:5,gc:6,pts:4}
+];
+
+const escalacao = {
+    time:"Shanghai Jiading",
+    formacao:"4-3-3",
+    linhas:[
+        [
+            {nome:"Xu Zhenyu",pos:"CA"},
+            {nome:"Andrej Kostic",pos:"CA"},
+            {nome:"Julius Caesar",pos:"CA"}
+
+        ],
+       
+        [
+            {nome:"Napoleão",pos:"MC"},
+            {nome:"Stalin",pos:"Mc"}
+            
+        ],
+        [
+            
+            {nome:"Chen Hao",pos:"ZAG"},
+            {nome:"Wang Lei",pos:"ZAG"},
+            {nome:"Chi Gui",pos:"ZAG"},
+            {nome:"Liu Zang",pos:"ZAG"},
+            {nome:"Zhang Rui",pos:"ZAG"}
+        ],
+        [
+            {nome:"Li Wei",pos:"GOL"}
+        ]
+    ]
+};
+
+const ultimosJogos = [
+    {casa:"Shanghai Jiading",fora:"Shanghai Port",placar:"7 x 2",competicao:"Super Liga Chinesa"},
+    {casa:"China",fora:"Tailândia",placar:"4 x 0",competicao:"Seleção"},
+    {casa:"Shanghai Jiading",fora:"Beijing Guoan",placar:"2 x 0",competicao:"Super Liga Chinesa"},
+    {casa:"Shanghai Jiading",fora:"Al-Ittihad",placar:"1 x 2",competicao:"AFC Champions League"}
+];
+
+const artilheiros = [
+    {nome:"Andrej Kostic",gols:253},
+    {nome:"Xu Zhenyu",gols:28},
+    {nome:"Wu Lei",gols:19},
+    {nome:"Zhou Junhao",gols:14},
+    {nome:"Lin Chaocan",gols:9}
+];
+
+const galeria = [
+    "img/vinganca-port-7x2-1.jpg",
+    "img/copa-da-china-campeao-1.jpg",
+    "img/china-4x0-tailandia-1.jpg",
+    "img/kostic-253-gols-1.jpg",
+    "img/al-ittihad-semifinal-1.jpg",
+    "img/ascensao-jiading-1.jpg"
+];
+
+const linhaDoTempo = [
+    {titulo:"Temporada 1 — Reconstrução", texto:"O projeto começa ainda sem acesso, formando a base para o futuro."},
+    {titulo:"Temporada 2 — China League One", texto:"O Jiading conquista a segunda divisão e sobe como campeão."},
+    {titulo:"2027-28 — Primeiro título nacional", texto:"O clube conquista sua primeira Super Liga Chinesa."},
+    {titulo:"2028-29 — Bicampeonato e Mundial", texto:"O Jiading confirma o domínio nacional e disputa a Copa do Mundo de Clubes."},
+    {titulo:"2029-30 — Doblete nacional", texto:"Campeão da liga, campeão da copa e semifinalista da Champions Asiática."},
+    {titulo:"2030-31 — Nova era", texto:"A missão é manter a hegemonia chinesa e buscar a glória continental."}
+];
+
+function carregarNoticias(filtro = "todas"){
+    const grid = document.getElementById("newsGrid");
+    grid.innerHTML = "";
+
+    noticias.forEach((noticia, noticiaIndex) => {
+        if(filtro === "todas" || noticia.tipo.includes(filtro)){
+            const imagensHTML = noticia.imagens.map((img, index) => `
+                <img src="${img}" alt="${noticia.titulo}" class="${index === 0 ? "active" : ""}" onerror="this.style.display='none'">
+            `).join("");
+
+            const dotsHTML = noticia.imagens.map((img, index) => `
+                <span class="dot ${index === 0 ? "active" : ""}"></span>
+            `).join("");
+
+            grid.innerHTML += `
+                <article class="news-card">
+                    <div class="news-img carousel">
+                        ${imagensHTML}
+
+                        <button class="carousel-btn prev" onclick="mudarImagem(this, -1)">‹</button>
+                        <button class="carousel-btn next" onclick="mudarImagem(this, 1)">›</button>
+
+                        <div class="dots">${dotsHTML}</div>
+                        <span class="category">${noticia.categoria}</span>
+                    </div>
+
+                    <div class="news-content">
+                        <small>${noticia.temporada}</small>
+                        <h3>${noticia.titulo}</h3>
+                        <p>${noticia.texto}</p>
+                        <div class="meta">${noticia.meta}</div>
+                        <button class="read-more" onclick="abrirModal(${noticiaIndex})">Ler matéria</button>
+                    </div>
+                </article>
+            `;
+        }
+    });
+}
+
+function mudarImagem(botao, direcao){
+    const carousel = botao.parentElement;
+    const imagens = carousel.querySelectorAll("img");
+    const dots = carousel.querySelectorAll(".dot");
+
+    if(imagens.length <= 1){
+        return;
+    }
+
+    let atual = 0;
+
+    imagens.forEach((img, index) => {
+        if(img.classList.contains("active")){
+            atual = index;
+        }
+    });
+
+    imagens[atual].classList.remove("active");
+    dots[atual].classList.remove("active");
+
+    let proxima = atual + direcao;
+
+    if(proxima < 0){
+        proxima = imagens.length - 1;
+    }
+
+    if(proxima >= imagens.length){
+        proxima = 0;
+    }
+
+    imagens[proxima].classList.add("active");
+    dots[proxima].classList.add("active");
+}
+
+function filtrarNoticias(filtro, botao){
+    document.querySelectorAll(".filters button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    botao.classList.add("active");
+    carregarNoticias(filtro);
+}
+
+function abrirModal(index){
+    const noticia = noticias[index];
+
+    document.getElementById("modalCategoria").textContent = `${noticia.categoria} • ${noticia.meta}`;
+    document.getElementById("modalTitulo").textContent = noticia.titulo;
+    document.getElementById("modalTexto").textContent = noticia.texto;
+    document.getElementById("modalTextoExtra").textContent = noticia.extra;
+
+    document.getElementById("modal").classList.add("open");
+}
+
+function fecharModal(){
+    document.getElementById("modal").classList.remove("open");
+}
+
+function carregarTabela(){
+    const tbody = document.getElementById("tabelaLiga");
+    tbody.innerHTML = "";
+
+    tabelaLiga.forEach(clube => {
+        const saldo = clube.gp - clube.gc;
+        const classe = clube.time === "Shanghai Jiading" ? "destaque" : "";
+
+        tbody.innerHTML += `
+            <tr class="${classe}">
+                <td>${clube.pos}</td>
+                <td>${clube.time}</td>
+                <td>${clube.j}</td>
+                <td>${saldo > 0 ? "+" + saldo : saldo}</td>
+                <td>${clube.pts}</td>
+            </tr>
+        `;
+    });
+}
+
+function carregarEscalacao(){
+    document.getElementById("formacaoTexto").textContent =
+        `${escalacao.time} — Formação ${escalacao.formacao}`;
+
+    const campo = document.getElementById("campo");
+    campo.innerHTML = "";
+
+    escalacao.linhas.forEach(linha => {
+        let htmlLinha = `<div class="linha">`;
+
+        linha.forEach(jogador => {
+            htmlLinha += `
+                <div class="jogador">
+                    <strong>${jogador.pos}</strong>
+                    <span>${jogador.nome}</span>
+                </div>
+            `;
+        });
+
+        htmlLinha += `</div>`;
+        campo.innerHTML += htmlLinha;
+    });
+}
+
+function carregarJogos(){
+    const div = document.getElementById("ultimosJogos");
+    div.innerHTML = "";
+
+    ultimosJogos.forEach(jogo => {
+        div.innerHTML += `
+            <div class="match">
+                <strong>${jogo.casa} ${jogo.placar} ${jogo.fora}</strong>
+                <p>${jogo.competicao}</p>
+            </div>
+        `;
+    });
+}
+
+function carregarArtilheiros(){
+    const tbody = document.getElementById("artilheirosTabela");
+    tbody.innerHTML = "";
+
+    artilheiros.forEach((jogador, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${jogador.nome}</td>
+                <td>${jogador.gols}</td>
+            </tr>
+        `;
+    });
+}
+
+function carregarTimeline(){
+    const div = document.getElementById("timeline");
+    div.innerHTML = "";
+
+    linhaDoTempo.forEach(item => {
+        div.innerHTML += `
+            <div class="timeline-item">
+                <h3>${item.titulo}</h3>
+                <p>${item.texto}</p>
+            </div>
+        `;
+    });
+}
+
+function carregarGaleria(){
+    const grid = document.getElementById("galeriaGrid");
+    grid.innerHTML = "";
+
+    galeria.forEach(img => {
+        grid.innerHTML += `
+            <div class="gallery-item">
+                <img src="${img}" alt="Galeria Shanghai Jiading" onerror="this.style.display='none'">
+            </div>
+        `;
+    });
+}
+
+carregarNoticias();
+carregarTabela();
+carregarEscalacao();
+carregarJogos();
+carregarArtilheiros();
+carregarTimeline();
+carregarGaleria();
+</script>
+
+
+  </body>
+</html>
